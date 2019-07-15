@@ -1,0 +1,23 @@
+version: '3'
+services:
+  web:
+    build: .
+    command: ["npm", "run", "dev"]
+    ports:
+      - "5000:3000"
+      - "9222:9222"
+    volumes:
+      - ./build:/app/build
+    links:
+      - mongo
+    environment:
+      - LOG_LEVEL=debug
+      - NODE_ENV=development
+  mongo:
+    image: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - data-volume:/var/lib/db
+volumes:
+  data-volume:
